@@ -1,4 +1,12 @@
 class EmployeePayroll {
+    // constructor(...params) {
+    //     this.id = params[0];
+    //     this.name = params[1];
+    //     this.salary = params[2];
+    //     this.gender = params[3];
+    //     this.startDate = params[4];
+    // }
+
     get id() {
         return this._id;
     }
@@ -48,41 +56,21 @@ class EmployeePayroll {
         this._note = note;
     }
     get startDate() {
-
         return this._startDate;
     }
     set startDate(startDate) {
-        const now = new Date();
-        if (startDate > now) throw "Given start date is in future";
-        const diffInDay = (now - startDate) / (1000 * 60 * 60 * 24);
-        if (diffInDay > 30) throw "Given start date is beyond 30days";
-        this._startDate = startDate;
+        if (startDate > new Date()) throw "Given start date is in future";
+        else if (startDate < new Date(Date.UTC(1970, 1, 1)))
+            throw "Given start date is before Jan, 1970";
+        else this._startDate = startDate;
     }
 
-
     toString() {
-        const format = { year: "numeric", month: "short", day: "numeric" };
+        const format = { year: "numeric", month: "long", day: "numeric" };
         const date =
             this.startDate === undefined ?
             "undefined" :
-            this.startDate.toLocaleDateString("en-GB", format);
-        return (
-            "id = " +
-            this.id +
-            ", name = " +
-            this.name +
-            ", gender = " +
-            this.gender +
-            ", profilePic = " +
-            this.profilePic +
-            ", department = " +
-            this.department +
-            ", salary = " +
-            this.salary +
-            ", startDate = " +
-            date +
-            ", note = " +
-            this.note
-        );
+            this.startDate.toLocaleDateString("en-US", format);
+        return `id:${this.id}, name:${this.name}, salary:${this.salary}, gender:${this.gender}, startDate:${date}, department:${this.department}, notes:${this.note}`;
     }
 }
