@@ -1,71 +1,74 @@
+
 class EmployeePayroll {
+    constructor(...params) {
+      this.id = params[0];
+      this.name = params[1];
+      this.salary = params[2];
+      this.gender = params[3];
+      this.startDate = params[4];
+    }
+  
     get id() {
-        return this._id;
+      return this._id;
     }
     set id(id) {
         this._id = id;
     }
     get name() {
-        return this._name;
+      return this._name;
     }
     set name(name) {
-        const nameRegex = RegExp(
-            "^[A-Z]{1}[a-zA-Z\\s]{2,}$"
-        );
-        if (nameRegex.test(name)) this._name = name;
-        else throw "Given name is in wrong format";
+      const nameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
+      if (nameRegex.test(name)) this._name = name;
+      else throw "Given name is in wrong format";
     }
-
+  
     get profilePic() {
-        return this._profilePic;
+      return this._profilePic;
     }
     set profilePic(profilePic) {
-        this._profilePic = profilePic;
+      this._profilePic = profilePic;
     }
-
+  
     get gender() {
-        return this._gender;
+      return this._gender;
     }
     set gender(gender) {
-        this._gender = gender;
+      this._gender = gender;
     }
     get department() {
-        return this._department;
+      return this._department;
     }
     set department(department) {
-        this._department = department;
+      this._department = department;
     }
     get salary() {
-        return this._salary;
+      return this._salary;
     }
     set salary(salary) {
-        this._salary = salary;
+      this._salary = salary;
     }
     get note() {
-        return this._note;
+      return this._note;
     }
     set note(note) {
-        this._note = note;
+      this._note = note;
     }
     get startDate() {
-        const format = { year: "numeric", month: "long", day: "numeric" };
-        this._startDate =
-            this._startDate === undefined ?
-            "undefined" :
-            this._startDate.toLocaleDateString("en-US", format);
-        return this._startDate;
+      return this._startDate;
     }
     set startDate(startDate) {
-        if (startDate > new Date()) throw "Given start date is in future";
-        else if (startDate < new Date(Date.UTC(1970, 1, 1)))
-            throw "Given start date is before Jan, 1970";
-        else {
-            const format = { year: "numeric", month: "long", day: "numeric" };
-            startDate =
-                startDate === undefined ?
-                "undefined" :
-                startDate.toLocaleDateString("en-US", format);
-        }
+      if (startDate <= new Date() || startDate == undefined)
         this._startDate = startDate;
+      else throw "Given start date is in future";
     }
-}
+  
+    toString() {
+      const format = { year: "numeric", month: "long", day: "numeric" };
+      const date =
+        this.startDate === undefined
+          ? "undefined"
+          : this.startDate.toLocaleDateString("en-US", format);
+      return `id:${this.id}, name:${this.name}, salary:${this.salary}, gender:${this.gender}, startDate:${date}`;
+    }
+  }
